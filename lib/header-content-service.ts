@@ -5,18 +5,19 @@ import type { HeaderContent } from '@/types/sanity'
 const placeholderHeaderContent: HeaderContent = {
   brandName: {
     primary: 'M.I',
-    secondary: 'Resource'
+    secondary: 'Resource Services Ltd'
   },
   navigation: [
-    { name: 'Home', href: '#home', order: 1 },
-    { name: 'About', href: '#about', order: 2 },
-    { name: 'Services', href: '#services', order: 3 },
-    { name: 'Why Us', href: '#why-us', order: 4 },
-    { name: 'Contact', href: '#contact', order: 5 },
+    { name: 'Home', href: '/', order: 1 },
+    { name: 'About', href: '/about', order: 2 },
+    { name: 'Services', href: '/services', order: 3 },
+    { name: 'Testimonials', href: '/testimonials', order: 4 },
+    { name: 'Clients', href: '/clients', order: 5 },
+    { name: 'Contact', href: '/contact', order: 6 },
   ],
   ctaButton: {
     text: 'Get Started',
-    url: '#contact'
+    url: '/contact'
   }
 }
 

@@ -18,12 +18,14 @@ export function ClientsClient({ content }: ClientsClientProps) {
     badgeText,
     headline,
     highlightedText,
-    clientLogos,
+    clientLogos = [], // Provide default empty array
     animationSettings
   } = content
 
   // Sort logos by order
-  const sortedLogos = [...clientLogos].sort((a, b) => a.order - b.order)
+  const sortedLogos = (clientLogos && Array.isArray(clientLogos)) 
+    ? [...clientLogos].sort((a, b) => a.order - b.order)
+    : []
 
   // Create headline with highlighted text
   const renderHeadline = () => {
@@ -68,19 +70,20 @@ export function ClientsClient({ content }: ClientsClientProps) {
         )}
 
         {/* Scrolling Logos Container */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="relative overflow-hidden"
-        >
-          {/* Gradient Overlays */}
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10" />
+        {sortedLogos.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="relative overflow-hidden"
+          >
+            {/* Gradient Overlays */}
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-linear-to-r from-background to-transparent z-10" />
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-linear-to-l from-background to-transparent z-10" />
 
           {/* Scrolling Container */}
           <div 
-            className={`flex items-center ${pauseOnHover ? 'hover:[animation-play-state:paused]' : ''}`}
+            className={`flex items-center ${pauseOnHover ? 'hover:paused' : ''}`}
             style={{
               animation: `scroll-left ${scrollSpeed}s linear infinite`,
               width: 'fit-content'
@@ -88,14 +91,14 @@ export function ClientsClient({ content }: ClientsClientProps) {
           >
             {/* First set of logos */}
             {sortedLogos.map((logo) => {
-              const imageUrl = logo.logo?.asset?.url 
+              const imageUrl = logo.logo?.asset?._ref 
                 ? getOptimizedImageUrl(logo.logo, { width: 200, height: 100, format: 'webp' })
                 : '/placeholder-logo.svg'
 
               return (
                 <motion.div
                   key={`first-${logo._key}`}
-                  className="flex-shrink-0 mx-8 group cursor-default"
+                  className="shrink-0 mx-8 group cursor-default"
                   whileHover={{ scale: 1.15 }}
                   transition={{ duration: 0.3, ease: 'easeInOut' }}
                 >
@@ -114,14 +117,14 @@ export function ClientsClient({ content }: ClientsClientProps) {
 
             {/* Duplicate set for seamless loop */}
             {sortedLogos.map((logo) => {
-              const imageUrl = logo.logo?.asset?.url 
+              const imageUrl = logo.logo?.asset?._ref 
                 ? getOptimizedImageUrl(logo.logo, { width: 200, height: 100, format: 'webp' })
                 : '/placeholder-logo.svg'
 
               return (
                 <motion.div
                   key={`second-${logo._key}`}
-                  className="flex-shrink-0 mx-8 group cursor-default"
+                  className="shrink-0 mx-8 group cursor-default"
                   whileHover={{ scale: 1.15 }}
                   transition={{ duration: 0.3, ease: 'easeInOut' }}
                 >
@@ -139,6 +142,7 @@ export function ClientsClient({ content }: ClientsClientProps) {
             })}
           </div>
         </motion.div>
+        )}
       </div>
 
       {/* CSS Animation */}
