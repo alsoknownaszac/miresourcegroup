@@ -9,7 +9,7 @@ interface HeaderClientProps {
   content: HeaderContent
 }
 
-// Services mega menu data structure
+// Services mega menu data structure - Based on actual company services
 const servicesMenu = {
   items: [
     {
@@ -17,65 +17,77 @@ const servicesMenu = {
       title: "Engineering Services",
       href: "/services/engineering",
       subcategories: [
-        { name: "Process Engineering", href: "/services/engineering/process" },
-        { name: "Mechanical Design", href: "/services/engineering/mechanical" },
-        { name: "Electrical Systems", href: "/services/engineering/electrical" },
-        { name: "Instrumentation", href: "/services/engineering/instrumentation" },
+        { name: "Mechanical & Civil Works", href: "/services/engineering/mechanical-civil" },
+        { name: "Fabrication & Instrumentation", href: "/services/engineering/fabrication" },
+        { name: "Oil Field Services", href: "/services/engineering/oilfield" },
+        { name: "Structural Engineering", href: "/services/engineering/structural" },
+        { name: "Electrical & Instrumentation", href: "/services/engineering/electrical" },
+        { name: "Welding Services", href: "/services/engineering/welding" },
       ]
     },
     {
       icon: Package,
-      title: "Procurement",
+      title: "Procurement Services",
       href: "/services/procurement",
       subcategories: [
-        { name: "Equipment Sourcing", href: "/services/procurement/equipment" },
-        { name: "Vendor Management", href: "/services/procurement/vendors" },
-        { name: "Quality Assurance", href: "/services/procurement/quality" },
-        { name: "Contract Negotiation", href: "/services/procurement/contracts" },
+        { name: "Equipment & Material Supply", href: "/services/procurement/equipment" },
+        { name: "Petroleum Products & Lubricants", href: "/services/procurement/petroleum" },
+        { name: "Marine & Oil Tools", href: "/services/procurement/marine-tools" },
+        { name: "PPE & Safety Equipment", href: "/services/procurement/safety" },
+        { name: "Valves, Fittings & Pipes", href: "/services/procurement/valves-fittings" },
+        { name: "Chandelling Services", href: "/services/procurement/chandelling" },
       ]
     },
     {
       icon: BarChart3,
-      title: "Supply Chain",
+      title: "Supply Chain Management",
       href: "/services/supply-chain",
       subcategories: [
+        { name: "Production Management", href: "/services/supply-chain/production" },
+        { name: "Distribution & Deliveries", href: "/services/supply-chain/distribution" },
+        { name: "Quality Inspection", href: "/services/supply-chain/quality" },
         { name: "Inventory Management", href: "/services/supply-chain/inventory" },
-        { name: "Warehousing", href: "/services/supply-chain/warehousing" },
-        { name: "Distribution", href: "/services/supply-chain/distribution" },
-        { name: "Optimization", href: "/services/supply-chain/optimization" },
+        { name: "Warehousing Solutions", href: "/services/supply-chain/warehousing" },
+        { name: "Material Dispatch", href: "/services/supply-chain/dispatch" },
       ]
     },
     {
       icon: Truck,
-      title: "Logistics",
+      title: "Logistics Services",
       href: "/services/logistics",
       subcategories: [
-        { name: "Transportation", href: "/services/logistics/transportation" },
-        { name: "Freight Forwarding", href: "/services/logistics/freight" },
-        { name: "Customs Clearance", href: "/services/logistics/customs" },
+        { name: "Material Transportation", href: "/services/logistics/transportation" },
+        { name: "Heavy Equipment Haulage", href: "/services/logistics/heavy-equipment" },
+        { name: "Freight Management", href: "/services/logistics/freight" },
         { name: "Last Mile Delivery", href: "/services/logistics/delivery" },
+        { name: "Fleet Management", href: "/services/logistics/fleet" },
+        { name: "Customs Clearance", href: "/services/logistics/customs" },
       ]
     },
     {
       icon: Lightbulb,
-      title: "Consulting",
-      href: "/services/consulting",
+      title: "Management Services",
+      href: "/services/management",
       subcategories: [
-        { name: "Strategic Planning", href: "/services/consulting/strategy" },
-        { name: "Operations Optimization", href: "/services/consulting/operations" },
-        { name: "Risk Management", href: "/services/consulting/risk" },
-        { name: "Compliance", href: "/services/consulting/compliance" },
+        { name: "Business Administration", href: "/services/management/business-admin" },
+        { name: "Project Management", href: "/services/management/project" },
+        { name: "Environmental Management", href: "/services/management/environmental" },
+        { name: "Human Resource Management", href: "/services/management/hr" },
+        { name: "Industrial Management", href: "/services/management/industrial" },
+        { name: "Strategic Planning", href: "/services/management/strategic" },
       ]
     },
     {
       icon: Headphones,
-      title: "Operations Support",
-      href: "/services/operations",
+      title: "Construction & Maintenance",
+      href: "/services/construction",
       subcategories: [
-        { name: "Maintenance Services", href: "/services/operations/maintenance" },
-        { name: "Technical Support", href: "/services/operations/technical" },
-        { name: "Field Services", href: "/services/operations/field" },
-        { name: "Emergency Response", href: "/services/operations/emergency" },
+        { name: "Heavy Civil Construction", href: "/services/construction/civil" },
+        { name: "Road Works & Maintenance", href: "/services/construction/roads" },
+        { name: "Commercial Construction", href: "/services/construction/commercial" },
+        { name: "Industrial Construction", href: "/services/construction/industrial" },
+        { name: "Equipment Maintenance", href: "/services/construction/maintenance" },
+        { name: "Turnkey Solutions", href: "/services/construction/turnkey" },
       ]
     },
   ]
@@ -168,7 +180,7 @@ export default function HeaderClient({ content }: HeaderClientProps) {
                       <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
                     </motion.button>
 
-                    {/* Mega Menu Dropdown */}
+                    {/* Mega Menu Dropdown - Traditional Modern Design */}
                     <AnimatePresence>
                       {servicesDropdownOpen && (
                         <motion.div
@@ -178,94 +190,113 @@ export default function HeaderClient({ content }: HeaderClientProps) {
                           exit={{ opacity: 0, y: 10 }}
                           transition={{ duration: 0.2 }}
                           onMouseLeave={() => setServicesDropdownOpen(false)}
-                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[1100px] bg-card border border-border rounded-xl shadow-2xl overflow-hidden"
+                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[900px] bg-card border border-border rounded-lg shadow-2xl overflow-hidden"
                         >
                           <div className="flex">
-                            {/* Left Side - Service Icons Grid */}
-                            <div className="w-1/3 bg-muted/30 border-r border-border p-8">
-                              <div className="grid grid-cols-2 gap-4">
-                                {servicesMenu.items.map((service, idx) => {
-                                  const IconComponent = service.icon
-                                  return (
-                                    <motion.button
-                                      key={idx}
-                                      onMouseEnter={() => setHoveredService(idx)}
-                                      onClick={() => {
-                                        window.location.href = service.href
-                                        setServicesDropdownOpen(false)
-                                      }}
-                                      className={`p-5 rounded-lg transition-all duration-200 text-left ${
-                                        hoveredService === idx
-                                          ? 'bg-primary/10 border-primary/40'
-                                          : 'bg-background/50 border-transparent hover:bg-background'
-                                      } border`}
-                                    >
-                                      <IconComponent 
-                                        size={28} 
-                                        className={`mb-3 ${hoveredService === idx ? 'text-primary' : 'text-muted-foreground'}`}
-                                      />
-                                      <div className={`text-sm font-medium ${hoveredService === idx ? 'text-primary' : 'text-foreground'}`}>
-                                        {service.title}
-                                      </div>
-                                    </motion.button>
-                                  )
-                                })}
+                            {/* Left Sidebar - Categories */}
+                            <div className="w-64 bg-muted/20 border-r border-border">
+                              <div className="p-4">
+                                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-3">
+                                  Service Categories
+                                </h3>
+                                <nav className="space-y-1">
+                                  {servicesMenu.items.map((service, idx) => {
+                                    const IconComponent = service.icon
+                                    return (
+                                      <button
+                                        key={idx}
+                                        onMouseEnter={() => setHoveredService(idx)}
+                                        onClick={() => {
+                                          window.location.href = service.href
+                                          setServicesDropdownOpen(false)
+                                        }}
+                                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm transition-all duration-200 ${
+                                          hoveredService === idx
+                                            ? 'bg-primary text-primary-foreground shadow-sm'
+                                            : 'text-foreground hover:bg-background'
+                                        }`}
+                                      >
+                                        <IconComponent size={18} className={hoveredService === idx ? '' : 'text-muted-foreground'} />
+                                        <span className="font-medium">{service.title}</span>
+                                      </button>
+                                    )
+                                  })}
+                                </nav>
                               </div>
                             </div>
 
-                            {/* Right Side - Subcategories */}
-                            <div className="w-2/3 p-8">
+                            {/* Right Content - Subcategories */}
+                            <div className="flex-1 p-6">
                               <AnimatePresence mode="wait">
                                 <motion.div
                                   key={hoveredService}
-                                  initial={{ opacity: 0, x: 20 }}
+                                  initial={{ opacity: 0, x: 10 }}
                                   animate={{ opacity: 1, x: 0 }}
-                                  exit={{ opacity: 0, x: -20 }}
-                                  transition={{ duration: 0.2 }}
+                                  exit={{ opacity: 0, x: -10 }}
+                                  transition={{ duration: 0.15 }}
                                 >
-                                  <div className="flex items-center gap-3 mb-4 pb-3 border-b border-border">
-                                    {(() => {
-                                      const IconComponent = servicesMenu.items[hoveredService].icon
-                                      return <IconComponent size={20} className="text-primary" />
-                                    })()}
-                                    <h3 className="text-lg font-semibold text-foreground">
-                                      {servicesMenu.items[hoveredService].title}
-                                    </h3>
+                                  {/* Category Header */}
+                                  <div className="mb-5">
+                                    <div className="flex items-center gap-2 mb-2">
+                                      {(() => {
+                                        const IconComponent = servicesMenu.items[hoveredService].icon
+                                        return <IconComponent size={20} className="text-primary" />
+                                      })()}
+                                      <h4 className="text-lg font-bold text-foreground">
+                                        {servicesMenu.items[hoveredService].title}
+                                      </h4>
+                                    </div>
+                                    <div className="h-px bg-gradient-to-r from-primary/50 to-transparent" />
                                   </div>
-                                  
-                                  <div className="grid grid-cols-2 gap-4">
+
+                                  {/* Subcategories List */}
+                                  <div className="grid grid-cols-2 gap-x-6 gap-y-3">
                                     {servicesMenu.items[hoveredService].subcategories.map((sub, subIdx) => (
                                       <motion.a
                                         key={subIdx}
                                         href={sub.href}
-                                        initial={{ opacity: 0, y: 10 }}
+                                        initial={{ opacity: 0, y: 5 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: subIdx * 0.05 }}
+                                        transition={{ delay: subIdx * 0.03 }}
                                         onClick={() => setServicesDropdownOpen(false)}
-                                        className="flex items-start gap-2 p-3 rounded-lg hover:bg-muted transition-colors group"
+                                        className="flex items-center gap-2.5 py-2 px-3 rounded-md hover:bg-muted/50 transition-colors group"
                                       >
-                                        <span className="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary mt-1.5 shrink-0" />
-                                        <span className="text-sm text-muted-foreground group-hover:text-primary transition-colors">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-primary/40 group-hover:bg-primary group-hover:scale-125 transition-all" />
+                                        <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
                                           {sub.name}
                                         </span>
                                       </motion.a>
                                     ))}
                                   </div>
+
+                                  {/* View Category Link */}
+                                  <div className="mt-6 pt-4 border-t border-border">
+                                    <a
+                                      href={servicesMenu.items[hoveredService].href}
+                                      onClick={() => setServicesDropdownOpen(false)}
+                                      className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                                    >
+                                      View all {servicesMenu.items[hoveredService].title.toLowerCase()}
+                                      <ChevronDown size={14} className="-rotate-90" />
+                                    </a>
+                                  </div>
                                 </motion.div>
                               </AnimatePresence>
-
-                              {/* View All Services Link */}
-                              <div className="mt-6 pt-4 border-t border-border">
-                                <a
-                                  href="/services"
-                                  onClick={() => setServicesDropdownOpen(false)}
-                                  className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-                                >
-                                  View All Services
-                                  <ChevronDown size={16} className="-rotate-90" />
-                                </a>
-                              </div>
                             </div>
+                          </div>
+
+                          {/* Footer */}
+                          <div className="bg-muted/10 px-6 py-3 border-t border-border flex items-center justify-between">
+                            <p className="text-xs text-muted-foreground">
+                              Explore our comprehensive service offerings
+                            </p>
+                            <a
+                              href="/services"
+                              onClick={() => setServicesDropdownOpen(false)}
+                              className="text-xs font-semibold text-primary hover:text-primary/80 transition-colors uppercase tracking-wide"
+                            >
+                              View All Services →
+                            </a>
                           </div>
                         </motion.div>
                       )}
