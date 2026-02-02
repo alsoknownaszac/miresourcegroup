@@ -28,8 +28,8 @@ export default function ContactPage() {
         subtitle="Let's discuss how we can support your operations"
         backgroundImage="/landscape-port-operations.jpg"
       />
-      <ContactInfoCards />
       <Contact />
+      <ContactInfoCards />
       <OfficeLocations />
       <SocialMediaLinks />
       <ContactFAQ />
