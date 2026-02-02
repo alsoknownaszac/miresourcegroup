@@ -6,9 +6,9 @@ import About from "@/components/about-simple"
 import { MissionVision } from "@/components/about/mission-vision"
 import { CoreValues } from "@/components/about/core-values"
 import { KeyCapabilities } from "@/components/about/key-capabilities"
-import { CompanyTimeline } from "@/components/about/company-timeline"
+import { MajorAchievements } from "@/components/about/major-achievements"
 import { CompanyStats } from "@/components/about/company-stats"
-import { TeamShowcase } from "@/components/about/team-showcase"
+import { EquipmentFacilities } from "@/components/about/equipment-facilities"
 import { CTASection } from "@/components/home/cta-section"
 import Footer from "@/components/footer-simple"
 
@@ -30,9 +30,9 @@ export default function AboutPage() {
       <CompanyStats />
       <MissionVision />
       <KeyCapabilities />
-      <CompanyTimeline />
+      <MajorAchievements />
       <CoreValues />
-      <TeamShowcase />
+      <EquipmentFacilities />
       <CTASection />
       <Footer />
     </PageWrapper>

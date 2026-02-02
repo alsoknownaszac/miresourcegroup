@@ -47,12 +47,12 @@ export function MissionVision() {
 
             <div className="flex gap-4 pt-4">
               <div className="flex-1 p-4 bg-card rounded-xl border border-border">
-                <div className="text-3xl font-bold text-primary mb-1">ISO 9001</div>
-                <div className="text-sm text-muted-foreground">Certified Quality</div>
+                <div className="text-3xl font-bold text-primary mb-1">Port Harcourt</div>
+                <div className="text-sm text-muted-foreground">Head Office</div>
               </div>
               <div className="flex-1 p-4 bg-card rounded-xl border border-border">
-                <div className="text-3xl font-bold text-primary mb-1">15+</div>
-                <div className="text-sm text-muted-foreground">Years Experience</div>
+                <div className="text-3xl font-bold text-primary mb-1">Lagos</div>
+                <div className="text-sm text-muted-foreground">Branch Office</div>
               </div>
             </div>
           </motion.div>
