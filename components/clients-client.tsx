@@ -81,67 +81,67 @@ export function ClientsClient({ content }: ClientsClientProps) {
             <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
             <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10" />
 
-            {/* Scrolling Container */}
-            <div 
-              className={`flex items-center ${pauseOnHover ? 'hover:[animation-play-state:paused]' : ''}`}
-              style={{
-                animation: `scroll-left ${scrollSpeed}s linear infinite`,
-                width: 'fit-content'
-              }}
-            >
-              {/* First set of logos */}
-              {sortedLogos.map((logo) => {
-                const imageUrl = logo.logo?.asset?.url 
-                  ? getOptimizedImageUrl(logo.logo, { width: 300, height: 150, format: 'webp' })
-                  : '/placeholder-logo.svg'
+          {/* Scrolling Container */}
+          <div 
+            className={`flex items-center ${pauseOnHover ? 'hover:[animation-play-state:paused]' : ''}`}
+            style={{
+              animation: `scroll-left ${scrollSpeed}s linear infinite`,
+              width: 'fit-content'
+            }}
+          >
+            {/* First set of logos */}
+            {sortedLogos.map((logo) => {
+              const imageUrl = logo.logo?.asset?.url 
+                ? getOptimizedImageUrl(logo.logo, { width: 280, height: 140, format: 'webp' })
+                : '/placeholder-logo.svg'
 
-                return (
-                  <motion.div
-                    key={`first-${logo._key}`}
-                    className="flex-shrink-0 mx-8 group cursor-default"
-                    whileHover={{ scale: 1.15 }}
-                    transition={{ duration: 0.3, ease: 'easeInOut' }}
-                  >
-                    <div className="relative w-48 h-24 sm:w-56 sm:h-28 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-border/20">
-                      <Image
-                        src={imageUrl}
-                        alt={logo.altText}
-                        fill
-                        className="object-contain transition-all duration-300 p-4"
-                        sizes="(max-width: 640px) 192px, 224px"
-                      />
-                    </div>
-                  </motion.div>
-                )
-              })}
+              return (
+                <motion.div
+                  key={`first-${logo._key}`}
+                  className="flex-shrink-0 mx-8 group cursor-default"
+                  whileHover={{ scale: 1.15 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                >
+                  <div className="relative w-44 h-22 sm:w-52 sm:h-26 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-border/20">
+                    <Image
+                      src={imageUrl}
+                      alt={logo.altText}
+                      fill
+                      className="object-contain transition-all duration-300 p-3"
+                      sizes="(max-width: 640px) 176px, 208px"
+                    />
+                  </div>
+                </motion.div>
+              )
+            })}
 
-              {/* Duplicate set for seamless loop */}
-              {sortedLogos.map((logo) => {
-                const imageUrl = logo.logo?.asset?.url 
-                  ? getOptimizedImageUrl(logo.logo, { width: 300, height: 150, format: 'webp' })
-                  : '/placeholder-logo.svg'
+            {/* Duplicate set for seamless loop */}
+            {sortedLogos.map((logo) => {
+              const imageUrl = logo.logo?.asset?.url 
+                ? getOptimizedImageUrl(logo.logo, { width: 280, height: 140, format: 'webp' })
+                : '/placeholder-logo.svg'
 
-                return (
-                  <motion.div
-                    key={`second-${logo._key}`}
-                    className="flex-shrink-0 mx-8 group cursor-default"
-                    whileHover={{ scale: 1.15 }}
-                    transition={{ duration: 0.3, ease: 'easeInOut' }}
-                  >
-                    <div className="relative w-48 h-24 sm:w-56 sm:h-28 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-border/20">
-                      <Image
-                        src={imageUrl}
-                        alt={logo.altText}
-                        fill
-                        className="object-contain transition-all duration-300 p-4"
-                        sizes="(max-width: 640px) 192px, 224px"
-                      />
-                    </div>
-                  </motion.div>
-                )
-              })}
-            </div>
-          </motion.div>
+              return (
+                <motion.div
+                  key={`second-${logo._key}`}
+                  className="flex-shrink-0 mx-8 group cursor-default"
+                  whileHover={{ scale: 1.15 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                >
+                  <div className="relative w-44 h-22 sm:w-52 sm:h-26 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-border/20">
+                    <Image
+                      src={imageUrl}
+                      alt={logo.altText}
+                      fill
+                      className="object-contain transition-all duration-300 p-3"
+                      sizes="(max-width: 640px) 176px, 208px"
+                    />
+                  </div>
+                </motion.div>
+              )
+            })}
+          </div>
+        </motion.div>
         )}
       </div>
 
