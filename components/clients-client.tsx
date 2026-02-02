@@ -92,7 +92,7 @@ export function ClientsClient({ content }: ClientsClientProps) {
               {/* First set of logos */}
               {sortedLogos.map((logo) => {
                 const imageUrl = logo.logo?.asset?.url 
-                  ? getOptimizedImageUrl(logo.logo, { width: 200, height: 100, format: 'webp' })
+                  ? getOptimizedImageUrl(logo.logo, { width: 300, height: 150, format: 'webp' })
                   : '/placeholder-logo.svg'
 
                 return (
@@ -102,13 +102,13 @@ export function ClientsClient({ content }: ClientsClientProps) {
                     whileHover={{ scale: 1.15 }}
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
-                    <div className="relative w-32 h-16 sm:w-40 sm:h-20 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-border/20">
+                    <div className="relative w-48 h-24 sm:w-56 sm:h-28 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-border/20">
                       <Image
                         src={imageUrl}
                         alt={logo.altText}
                         fill
-                        className="object-contain transition-all duration-300 p-3"
-                        sizes="(max-width: 640px) 128px, 160px"
+                        className="object-contain transition-all duration-300 p-4"
+                        sizes="(max-width: 640px) 192px, 224px"
                       />
                     </div>
                   </motion.div>
@@ -118,7 +118,7 @@ export function ClientsClient({ content }: ClientsClientProps) {
               {/* Duplicate set for seamless loop */}
               {sortedLogos.map((logo) => {
                 const imageUrl = logo.logo?.asset?.url 
-                  ? getOptimizedImageUrl(logo.logo, { width: 200, height: 100, format: 'webp' })
+                  ? getOptimizedImageUrl(logo.logo, { width: 300, height: 150, format: 'webp' })
                   : '/placeholder-logo.svg'
 
                 return (
@@ -128,13 +128,13 @@ export function ClientsClient({ content }: ClientsClientProps) {
                     whileHover={{ scale: 1.15 }}
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
-                    <div className="relative w-32 h-16 sm:w-40 sm:h-20 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-border/20">
+                    <div className="relative w-48 h-24 sm:w-56 sm:h-28 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-border/20">
                       <Image
                         src={imageUrl}
                         alt={logo.altText}
                         fill
-                        className="object-contain transition-all duration-300 p-3"
-                        sizes="(max-width: 640px) 128px, 160px"
+                        className="object-contain transition-all duration-300 p-4"
+                        sizes="(max-width: 640px) 192px, 224px"
                       />
                     </div>
                   </motion.div>
