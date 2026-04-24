@@ -3,7 +3,7 @@
 import { motion, useInView } from "framer-motion"
 import { useRef, useState } from "react"
 import Image from "next/image"
-import { Wrench, Package, BarChart3, Truck, Lightbulb, HardHat, CheckCircle2, ArrowRight, Users, Radio } from "lucide-react"
+import { Wrench, Package, BarChart3, Truck, Lightbulb, HardHat, CheckCircle2, ArrowRight, Users, Radio, Monitor } from "lucide-react"
 import type { ServiceDetailed } from "@/types/sanity"
 import { getImageUrl } from "@/lib/image-utils"
 
@@ -18,6 +18,36 @@ const iconMap: Record<string, any> = {
   CheckCircle2,
   Users,
   HardHat,
+  Monitor,
+}
+
+// Product category → stock image mapping
+const productImages: Record<string, string> = {
+  "Desktops":                  "https://images.unsplash.com/photo-1593640408182-31c228b29976?w=400&q=80",
+  "Laptops":                   "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&q=80",
+  "Servers":                   "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&q=80",
+  "Storages":                  "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=80",
+  "Printers":                  "https://images.unsplash.com/photo-1612815292218-e3e8ebc4dd73?w=400&q=80",
+  "Spares":                    "https://images.unsplash.com/photo-1563770660941-20978e870e26?w=400&q=80",
+  "Networking Products":       "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&q=80",
+  "Surveillance":              "https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=400&q=80",
+  "Security & Software Solutions": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&q=80",
+}
+
+// Brand name → local SVG path mapping
+const brandLogos: Record<string, string> = {
+  "HP":         "/brands/hp.svg",
+  "DELL":       "/brands/dell.svg",
+  "APPLE":      "/brands/apple.svg",
+  "LENOVO":     "/brands/lenovo.svg",
+  "ACER":       "/brands/acer.svg",
+  "IBM":        "/brands/ibm.svg",
+  "CISCO":      "/brands/cisco.svg",
+  "FORTINET":   "/brands/fortinet.svg",
+  "SONICWALL":  "/brands/sonicwall.svg",
+  "DLINK":      "/brands/dlink.svg",
+  "HIKVISION":  "/brands/hikvision.svg",
+  "PELCO":      "/brands/pelco.svg",
 }
 
 interface ServiceDetailsProps {
@@ -164,6 +194,72 @@ export function ServiceDetails({ services }: ServiceDetailsProps) {
                   ))}
                 </div>
               </div>
+
+              {/* Products section — shown only when service has products */}
+              {services[activeTab].products && services[activeTab].products!.length > 0 && (
+                <div>
+                  <h4 className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-wider mb-3 sm:mb-4">
+                    Products We Deal With
+                  </h4>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {services[activeTab].products!.map((product) => (
+                      <div
+                        key={product}
+                        className="group/product relative overflow-hidden rounded-xl border border-border bg-secondary/30 hover:border-primary/40 transition-all duration-300"
+                      >
+                        <div className="aspect-[4/3] relative">
+                          <img
+                            src={productImages[product] ?? `https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=80`}
+                            alt={product}
+                            className="w-full h-full object-cover group-hover/product:scale-105 transition-transform duration-500"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                          <p className="absolute bottom-2 left-2 right-2 text-white text-xs font-semibold leading-tight">
+                            {product}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Brands section — shown only when service has brands */}
+              {services[activeTab].brands && services[activeTab].brands!.length > 0 && (
+                <div>
+                  <h4 className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-wider mb-3 sm:mb-4">
+                    Brands We Deal With
+                  </h4>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+                    {services[activeTab].brands!.map((brand) => (
+                      <div
+                        key={brand}
+                        className="flex items-center justify-center p-3 bg-white rounded-xl border border-border hover:border-primary/40 hover:shadow-md transition-all duration-300 h-14"
+                      >
+                        {brandLogos[brand] ? (
+                          <img
+                            src={brandLogos[brand]}
+                            alt={brand}
+                            className="h-6 w-auto max-w-full object-contain"
+                            style={{ filter: 'invert(0)' }}
+                          />
+                        ) : (
+                          <span className="text-xs font-bold text-foreground">{brand}</span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Closing statement */}
+              {services[activeTab].closingStatement && (
+                <div className="p-4 bg-primary/5 rounded-xl border-l-4 border-primary">
+                  <p className="text-sm text-foreground font-medium italic leading-relaxed">
+                    {services[activeTab].closingStatement}
+                  </p>
+                </div>
+              )}
 
               <a
                 href="/contact"

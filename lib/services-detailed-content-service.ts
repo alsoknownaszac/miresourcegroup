@@ -20,6 +20,9 @@ const servicesQuery = `*[_type == "serviceDetailed" && published == true] | orde
   color,
   bgColor,
   subcategories[] | order(order asc),
+  products,
+  brands,
+  closingStatement,
   order,
   published
 }`
@@ -96,6 +99,9 @@ export async function getServiceById(id: string): Promise<ServiceDetailed | null
         color,
         bgColor,
         subcategories[] | order(order asc),
+        products,
+        brands,
+        closingStatement,
         order,
         published
       }`,

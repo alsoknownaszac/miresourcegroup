@@ -365,6 +365,9 @@ export interface ServiceDetailed {
     href: string
     order: number
   }>
+  products?: string[]
+  brands?: string[]
+  closingStatement?: string
   order: number
   published: boolean
 }
