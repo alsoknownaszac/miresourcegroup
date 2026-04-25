@@ -219,36 +219,7 @@ export function ServiceDetails({ services }: ServiceDetailsProps) {
                 </div>
               </div>
 
-              {/* Products section — shown only when service has products */}
-              {services[activeTab].products && services[activeTab].products!.length > 0 && (
-                <div>
-                  <h4 className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-wider mb-3 sm:mb-4">
-                    Our Products
-                  </h4>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {services[activeTab].products!.map((product) => (
-                      <div
-                        key={product}
-                        className="group/product relative overflow-hidden rounded-xl border border-border bg-secondary/30 hover:border-primary/40 transition-all duration-300"
-                      >
-                        <div className="aspect-[4/3] relative">
-                          <img
-                            src={productImages[product] ?? `https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=80`}
-                            alt={product}
-                            className="w-full h-full object-cover group-hover/product:scale-105 transition-transform duration-500"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                          <p className="absolute bottom-2 left-2 right-2 text-white text-xs font-semibold leading-tight">
-                            {product}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Brands section — shown only when service has brands */}
+{/* Brands section — shown only when service has brands */}
               {services[activeTab].brands && services[activeTab].brands!.length > 0 && (
                 <div>
                   <h4 className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-wider mb-3 sm:mb-4">
