@@ -23,9 +23,9 @@ const iconMap: Record<string, any> = {
 
 // Product category → stock image mapping
 const productImages: Record<string, string> = {
-  "IT equipment, software (e.g. printers, laptops)": "https://images.unsplash.com/photo-1516321318423-f06f70504504?w=400&q=80",
+  "IT equipment, software (e.g. printers, laptops)": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a9?w=400&q=80",
   "Communication Equipment and Gadgets": "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=400&q=80",
-  "Office and home wears equipment": "https://images.unsplash.com/photo-1533139102976-512ee42a18a5?w=400&q=80",
+  "Office and home wears equipment": "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=400&q=80",
   "Electrical and Electronics": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&q=80",
   "Carbon reduction technology": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80",
   "Desktops":                  "https://images.unsplash.com/photo-1547082299-de196ea013d6?w=400&q=80",
