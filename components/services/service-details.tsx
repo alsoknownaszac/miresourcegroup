@@ -25,7 +25,7 @@ const iconMap: Record<string, any> = {
 const productImages: Record<string, string> = {
   "IT equipment, software (e.g. printers, laptops)": "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&q=80",
   "Communication Equipment and Gadgets": "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=400&q=80",
-  "Office and home wears equipment": "https://images.unsplash.com/photo-1565182999555-2142dd9885a7?w=400&q=80",
+  "Office and home wears equipment": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&q=80",
   "Electrical and Electronics": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&q=80",
   "Carbon reduction technology": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80",
   "Desktops":                  "https://images.unsplash.com/photo-1547082299-de196ea013d6?w=400&q=80",
