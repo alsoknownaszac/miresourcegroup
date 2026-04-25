@@ -23,11 +23,16 @@ const iconMap: Record<string, any> = {
 
 // Product category → stock image mapping
 const productImages: Record<string, string> = {
-  "Desktops":                  "https://images.unsplash.com/photo-1593640408182-31c228b29976?w=400&q=80",
+  "IT equipment, software (e.g. printers, laptops)": "https://images.unsplash.com/photo-1516321318423-f06f70504504?w=400&q=80",
+  "Communication Equipment and Gadgets": "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=400&q=80",
+  "Office and home wears equipment": "https://images.unsplash.com/photo-1533139102976-512ee42a18a5?w=400&q=80",
+  "Electrical and Electronics": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&q=80",
+  "Carbon reduction technology": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80",
+  "Desktops":                  "https://images.unsplash.com/photo-1547082299-de196ea013d6?w=400&q=80",
   "Laptops":                   "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&q=80",
   "Servers":                   "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&q=80",
   "Storages":                  "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=80",
-  "Printers":                  "https://images.unsplash.com/photo-1612815292218-e3e8ebc4dd73?w=400&q=80",
+  "Printers":                  "https://images.unsplash.com/photo-1588421357574-87938a86fa28?w=400&q=80",
   "Spares":                    "https://images.unsplash.com/photo-1563770660941-20978e870e26?w=400&q=80",
   "Networking Products":       "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&q=80",
   "Surveillance":              "https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=400&q=80",
@@ -178,20 +183,39 @@ export function ServiceDetails({ services }: ServiceDetailsProps) {
                   Key Capabilities & Features
                 </h4>
                 <div className="grid gap-3">
-                  {services[activeTab].features.map((feature, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3, delay: idx * 0.05 }}
-                      className="flex items-start gap-2 sm:gap-3"
-                    >
-                      <CheckCircle2 className={`w-4 h-4 sm:w-5 sm:h-5 ${services[activeTab].color} shrink-0 mt-0.5`} />
-                      <span className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                        {feature}
-                      </span>
-                    </motion.div>
-                  ))}
+                  {services[activeTab].features.map((feature, idx) => {
+                    const isHeading = feature.startsWith('**') && feature.endsWith('**')
+                    if (isHeading) {
+                      const label = feature.slice(2, -2)
+                      return (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3, delay: idx * 0.05 }}
+                          className="pt-2"
+                        >
+                          <h5 className="text-sm sm:text-base font-bold text-foreground">
+                            {label}
+                          </h5>
+                        </motion.div>
+                      )
+                    }
+                    return (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.3, delay: idx * 0.05 }}
+                        className="flex items-start gap-2 sm:gap-3"
+                      >
+                        <CheckCircle2 className={`w-4 h-4 sm:w-5 sm:h-5 ${services[activeTab].color} shrink-0 mt-0.5`} />
+                        <span className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                          {feature}
+                        </span>
+                      </motion.div>
+                    )
+                  })}
                 </div>
               </div>
 
@@ -199,7 +223,7 @@ export function ServiceDetails({ services }: ServiceDetailsProps) {
               {services[activeTab].products && services[activeTab].products!.length > 0 && (
                 <div>
                   <h4 className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-wider mb-3 sm:mb-4">
-                    Products We Deal With
+                    Our Products
                   </h4>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     {services[activeTab].products!.map((product) => (

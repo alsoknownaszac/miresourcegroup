@@ -58,8 +58,7 @@ export async function getServicesDetailed(): Promise<ServiceDetailed[]> {
   
   try {
     const services = await client.fetch(servicesQuery, {}, {
-      cache: isEnabled ? 'no-store' : 'force-cache',
-      next: { revalidate: isEnabled ? 0 : 60 },
+      next: { revalidate: 30 },
     })
     
     if (!services || services.length === 0) {

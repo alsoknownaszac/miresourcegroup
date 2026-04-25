@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ChevronDown, Wrench, Package, Truck, BarChart3, Lightbulb, CheckCircle2, Users, Radio } from "lucide-react"
+import { Menu, X, ChevronDown, Wrench, Package, Truck, BarChart3, Lightbulb, CheckCircle2, Users, Radio, Monitor, HardHat } from "lucide-react"
 import type { HeaderContent, ServiceDetailed } from "@/types/sanity"
 
 interface HeaderClientProps {
@@ -20,6 +20,8 @@ const iconMap: Record<string, any> = {
   Radio,
   CheckCircle2,
   Users,
+  Monitor,
+  HardHat,
 }
 
 export default function HeaderClient({ content, services }: HeaderClientProps) {

@@ -5,7 +5,9 @@ import { PageWrapper } from "@/components/layouts/page-wrapper"
 import Contact from "@/components/contact-simple"
 import { OfficeLocations } from "@/components/contact/office-locations"
 import { SocialMediaLinks } from "@/components/contact/social-media-links"
+import { ContactFAQ } from "@/components/contact/contact-faq"
 import Footer from "@/components/footer-simple"
+import { getOfficeLocations, getSocialLinks, getFAQItems } from "@/lib/static-content-service"
 
 export const metadata: Metadata = {
   title: "Contact Us | M.I Resource Services Ltd",
@@ -17,7 +19,13 @@ export const metadata: Metadata = {
   },
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const [offices, socialLinks, faqItems] = await Promise.all([
+    getOfficeLocations(),
+    getSocialLinks(),
+    getFAQItems(),
+  ])
+
   return (
     <PageWrapper>
       <Header />
@@ -27,8 +35,9 @@ export default function ContactPage() {
         backgroundImage="/oil-platform-ocean-with-sun-setting-it.jpg"
       />
       <Contact />
-      <OfficeLocations />
-      <SocialMediaLinks />
+      <OfficeLocations offices={offices} />
+      {socialLinks.length > 0 && <SocialMediaLinks links={socialLinks} />}
+      {faqItems.length > 0 && <ContactFAQ items={faqItems} />}
       <Footer />
     </PageWrapper>
   )
