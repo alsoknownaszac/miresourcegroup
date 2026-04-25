@@ -3,59 +3,68 @@
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { Building2, CheckCircle2, TrendingUp, Clock, Users } from "lucide-react"
+import type { CaseStudy } from "@/types/sanity"
 
-const caseStudies = [
+const iconMap: Record<string, any> = { Building2, CheckCircle2, TrendingUp, Clock, Users }
+
+const defaultCaseStudies: CaseStudy[] = [
   {
+    _key: 'default-1',
     client: "Major Oil & Gas Operator",
     industry: "Upstream Operations",
     project: "Offshore Platform Equipment Supply & Logistics",
     challenge: "Required rapid mobilization of specialized equipment and materials to offshore platform with strict safety and quality requirements.",
     solution: "Deployed our comprehensive supply chain management system with 24/7 logistics support, quality inspection protocols, and emergency response capability.",
     results: [
-      { metric: "100%", label: "On-time Delivery" },
-      { metric: "Zero", label: "Safety Incidents" },
-      { metric: "30%", label: "Cost Reduction" }
+      { _key: 'r1', metric: "100%", label: "On-time Delivery" },
+      { _key: 'r2', metric: "Zero", label: "Safety Incidents" },
+      { _key: 'r3', metric: "30%", label: "Cost Reduction" }
     ],
     services: ["Procurement", "Supply Chain", "Logistics"],
     duration: "12 months",
-    icon: Building2,
-    color: "bg-blue-500"
+    iconName: "Building2",
+    color: "bg-blue-500",
+    order: 1,
   },
   {
+    _key: 'default-2',
     client: "International Energy Company",
     industry: "Midstream Infrastructure",
     project: "Pipeline Construction & Maintenance Support",
     challenge: "Complex pipeline project requiring heavy construction equipment, welding services, and continuous material supply across multiple locations.",
     solution: "Provided turnkey solution including CAT wheel loaders, excavators, welding teams, and coordinated material distribution using our 7 Rs logistics framework.",
     results: [
-      { metric: "45 Days", label: "Ahead of Schedule" },
-      { metric: "100%", label: "Quality Compliance" },
-      { metric: "500+", label: "Tons Moved" }
+      { _key: 'r1', metric: "45 Days", label: "Ahead of Schedule" },
+      { _key: 'r2', metric: "100%", label: "Quality Compliance" },
+      { _key: 'r3', metric: "500+", label: "Tons Moved" }
     ],
     services: ["Engineering", "Equipment Rental", "Logistics"],
     duration: "18 months",
-    icon: Building2,
-    color: "bg-green-500"
+    iconName: "Building2",
+    color: "bg-green-500",
+    order: 2,
   },
   {
+    _key: 'default-3',
     client: "Nigerian Oil Corporation",
     industry: "Downstream Operations",
     project: "Facility Maintenance & Equipment Management",
     challenge: "Needed reliable partner for ongoing facility maintenance, equipment supply, and emergency response support for critical operations.",
     solution: "Established dedicated support team with pre-positioned equipment, preventive maintenance schedules, and 24/7 emergency response capability.",
     results: [
-      { metric: "99.8%", label: "Uptime Achieved" },
-      { metric: "24/7", label: "Support Available" },
-      { metric: "15%", label: "Efficiency Gain" }
+      { _key: 'r1', metric: "99.8%", label: "Uptime Achieved" },
+      { _key: 'r2', metric: "24/7", label: "Support Available" },
+      { _key: 'r3', metric: "15%", label: "Efficiency Gain" }
     ],
     services: ["Management Services", "Equipment Supply", "Maintenance"],
     duration: "Ongoing",
-    icon: Building2,
-    color: "bg-purple-500"
+    iconName: "Building2",
+    color: "bg-purple-500",
+    order: 3,
   }
 ]
 
-export function CaseStudiesClient() {
+export function CaseStudiesClient({ studies = defaultCaseStudies }: { studies?: CaseStudy[] }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
@@ -80,8 +89,8 @@ export function CaseStudiesClient() {
         </motion.div>
 
         <div className="space-y-8">
-          {caseStudies.map((study, index) => {
-            const IconComponent = study.icon
+          {studies.map((study, index) => {
+            const IconComponent = iconMap[study.iconName] ?? Building2
             
             return (
               <motion.div

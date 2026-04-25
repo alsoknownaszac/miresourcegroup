@@ -478,3 +478,57 @@ export interface ServiceDetailed {
   order: number
   published: boolean
 }
+
+export interface CaseStudyResult {
+  _key: string
+  metric: string
+  label: string
+}
+
+export interface CaseStudy {
+  _key: string
+  client: string
+  industry: string
+  project: string
+  challenge: string
+  solution: string
+  results: CaseStudyResult[]
+  services: string[]
+  duration: string
+  iconName: string
+  color: string
+  order: number
+}
+
+export interface CaseStudiesContent {
+  _id: string
+  _type: 'caseStudies'
+  studies: CaseStudy[]
+}
+
+export interface MarqueeItem {
+  _key: string
+  text: string
+  order: number
+}
+
+export interface MarqueeContent {
+  _id: string
+  _type: 'marquee'
+  items: MarqueeItem[]
+}
+
+export interface ContactMethod {
+  _key: string
+  iconName: string
+  title: string
+  details: string[]
+  description: string
+  order: number
+}
+
+export interface ContactMethodsContent {
+  _id: string
+  _type: 'contactMethods'
+  methods: ContactMethod[]
+}

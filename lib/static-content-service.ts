@@ -4,6 +4,7 @@ import type {
   CoreValue, CompanyStat, KeyCapability, Achievement,
   EquipmentCategory, WhyChooseUsReason, ServiceStep,
   Office, CTAContent, FAQItem, SocialLink,
+  CaseStudy, MarqueeItem, ContactMethod,
 } from '@/types/sanity'
 
 async function client() {
@@ -81,4 +82,22 @@ export async function getSocialLinks(): Promise<SocialLink[]> {
   const c = await client()
   const doc = await c.fetch(`*[_type == "footer"][0]{ socialLinks }`, {}, opts)
   return doc?.socialLinks ?? []
+}
+
+export async function getCaseStudies(): Promise<CaseStudy[]> {
+  const c = await client()
+  const doc = await c.fetch(`*[_type == "caseStudies"][0]{ studies }`, {}, opts)
+  return doc?.studies ?? []
+}
+
+export async function getMarqueeItems(): Promise<MarqueeItem[]> {
+  const c = await client()
+  const doc = await c.fetch(`*[_type == "marquee"][0]{ items }`, {}, opts)
+  return doc?.items ?? []
+}
+
+export async function getContactMethods(): Promise<ContactMethod[]> {
+  const c = await client()
+  const doc = await c.fetch(`*[_type == "contactMethods"][0]{ methods }`, {}, opts)
+  return doc?.methods ?? []
 }

@@ -19,10 +19,14 @@ import { serviceApproach } from './service-approach'
 import { officeLocations } from './office-locations'
 import { ctaSection } from './cta-section'
 import { faq } from './faq'
+import { caseStudies } from './case-studies'
+import { marquee } from './marquee'
+import { contactMethods } from './contact-methods'
 
 export const schemaTypes = [
   hero, about, services, serviceDetailed, valueProposition, testimonials,
   clients, header, contact, footer, pageHero,
   coreValues, companyStats, keyCapabilities, majorAchievements, equipmentFacilities,
   whyChooseUs, serviceApproach, officeLocations, ctaSection, faq,
+  caseStudies, marquee, contactMethods,
 ]
