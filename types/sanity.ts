@@ -342,6 +342,113 @@ export interface ClientsContent {
   }
 }
 
+// ── Static content types (formerly hardcoded) ────────────────────────────────
+
+export interface CoreValue {
+  _key: string
+  iconName: string
+  title: string
+  description: string
+  bgColor: string
+  order: number
+}
+
+export interface CompanyStat {
+  _key: string
+  iconName: string
+  value: string
+  label: string
+  description: string
+  order: number
+}
+
+export interface KeyCapability {
+  _key: string
+  iconName: string
+  title: string
+  description: string
+  textColor: string
+  order: number
+}
+
+export interface Achievement {
+  _key: string
+  iconName: string
+  title: string
+  description: string
+  metric: string
+  bgColor: string
+  order: number
+}
+
+export interface EquipmentItem {
+  _key: string
+  name: string
+  quantity: number
+  status: string
+}
+
+export interface EquipmentCategory {
+  _key: string
+  category: string
+  iconName: string
+  textColor: string
+  items: EquipmentItem[]
+  order: number
+}
+
+export interface WhyChooseUsReason {
+  _key: string
+  iconName: string
+  title: string
+  description: string
+  order: number
+}
+
+export interface ServiceStep {
+  _key: string
+  iconName: string
+  number: string
+  title: string
+  description: string
+  order: number
+}
+
+export interface OfficeContactPerson {
+  name: string
+  title: string
+  phone: string
+  email: string
+}
+
+export interface Office {
+  _key: string
+  name: string
+  type: string
+  address: string
+  phone: string
+  email: string
+  hours: string
+  contactPerson?: OfficeContactPerson
+  order: number
+}
+
+export interface CTAContent {
+  heading: string
+  description: string
+  primaryButtonText: string
+  primaryButtonHref: string
+  phone: string
+  email: string
+}
+
+export interface FAQItem {
+  _key: string
+  question: string
+  answer: string
+  order: number
+}
+
 // Detailed Service (for services page)
 export interface ServiceDetailed {
   _id: string
@@ -365,6 +472,63 @@ export interface ServiceDetailed {
     href: string
     order: number
   }>
+  products?: string[]
+  brands?: string[]
+  closingStatement?: string
   order: number
   published: boolean
+}
+
+export interface CaseStudyResult {
+  _key: string
+  metric: string
+  label: string
+}
+
+export interface CaseStudy {
+  _key: string
+  client: string
+  industry: string
+  project: string
+  challenge: string
+  solution: string
+  results: CaseStudyResult[]
+  services: string[]
+  duration: string
+  iconName: string
+  color: string
+  order: number
+}
+
+export interface CaseStudiesContent {
+  _id: string
+  _type: 'caseStudies'
+  studies: CaseStudy[]
+}
+
+export interface MarqueeItem {
+  _key: string
+  text: string
+  order: number
+}
+
+export interface MarqueeContent {
+  _id: string
+  _type: 'marquee'
+  items: MarqueeItem[]
+}
+
+export interface ContactMethod {
+  _key: string
+  iconName: string
+  title: string
+  details: string[]
+  description: string
+  order: number
+}
+
+export interface ContactMethodsContent {
+  _id: string
+  _type: 'contactMethods'
+  methods: ContactMethod[]
 }

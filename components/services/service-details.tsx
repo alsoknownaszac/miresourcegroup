@@ -3,7 +3,7 @@
 import { motion, useInView } from "framer-motion"
 import { useRef, useState } from "react"
 import Image from "next/image"
-import { Wrench, Package, BarChart3, Truck, Lightbulb, HardHat, CheckCircle2, ArrowRight, Users, Radio } from "lucide-react"
+import { Wrench, Package, BarChart3, Truck, Lightbulb, HardHat, CheckCircle2, ArrowRight, Users, Radio, Monitor } from "lucide-react"
 import type { ServiceDetailed } from "@/types/sanity"
 import { getImageUrl } from "@/lib/image-utils"
 
@@ -18,6 +18,41 @@ const iconMap: Record<string, any> = {
   CheckCircle2,
   Users,
   HardHat,
+  Monitor,
+}
+
+// Product category → stock image mapping
+const productImages: Record<string, string> = {
+  "IT equipment, software (e.g. printers, laptops)": "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&q=80",
+  "Communication Equipment and Gadgets": "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=400&q=80",
+  "Office and home wears equipment": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&q=80",
+  "Electrical and Electronics": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&q=80",
+  "Carbon reduction technology": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80",
+  "Desktops":                  "https://images.unsplash.com/photo-1547082299-de196ea013d6?w=400&q=80",
+  "Laptops":                   "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&q=80",
+  "Servers":                   "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&q=80",
+  "Storages":                  "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=80",
+  "Printers":                  "https://images.unsplash.com/photo-1588421357574-87938a86fa28?w=400&q=80",
+  "Spares":                    "https://images.unsplash.com/photo-1563770660941-20978e870e26?w=400&q=80",
+  "Networking Products":       "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&q=80",
+  "Surveillance":              "https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=400&q=80",
+  "Security & Software Solutions": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&q=80",
+}
+
+// Brand name → local SVG path mapping
+const brandLogos: Record<string, string> = {
+  "HP":         "/brands/hp.svg",
+  "DELL":       "/brands/dell.svg",
+  "APPLE":      "/brands/apple.svg",
+  "LENOVO":     "/brands/lenovo.svg",
+  "ACER":       "/brands/acer.svg",
+  "IBM":        "/brands/ibm.svg",
+  "CISCO":      "/brands/cisco.svg",
+  "FORTINET":   "/brands/fortinet.svg",
+  "SONICWALL":  "/brands/sonicwall.svg",
+  "DLINK":      "/brands/dlink.svg",
+  "HIKVISION":  "/brands/hikvision.svg",
+  "PELCO":      "/brands/pelco.svg",
 }
 
 interface ServiceDetailsProps {
@@ -148,22 +183,78 @@ export function ServiceDetails({ services }: ServiceDetailsProps) {
                   Key Capabilities & Features
                 </h4>
                 <div className="grid gap-3">
-                  {services[activeTab].features.map((feature, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3, delay: idx * 0.05 }}
-                      className="flex items-start gap-2 sm:gap-3"
-                    >
-                      <CheckCircle2 className={`w-4 h-4 sm:w-5 sm:h-5 ${services[activeTab].color} shrink-0 mt-0.5`} />
-                      <span className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                        {feature}
-                      </span>
-                    </motion.div>
-                  ))}
+                  {services[activeTab].features.map((feature, idx) => {
+                    const isHeading = feature.startsWith('**') && feature.endsWith('**')
+                    if (isHeading) {
+                      const label = feature.slice(2, -2)
+                      return (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3, delay: idx * 0.05 }}
+                          className="pt-2"
+                        >
+                          <h5 className="text-sm sm:text-base font-bold text-foreground">
+                            {label}
+                          </h5>
+                        </motion.div>
+                      )
+                    }
+                    return (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.3, delay: idx * 0.05 }}
+                        className="flex items-start gap-2 sm:gap-3"
+                      >
+                        <CheckCircle2 className={`w-4 h-4 sm:w-5 sm:h-5 ${services[activeTab].color} shrink-0 mt-0.5`} />
+                        <span className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                          {feature}
+                        </span>
+                      </motion.div>
+                    )
+                  })}
                 </div>
               </div>
+
+{/* Brands section — shown only when service has brands */}
+              {services[activeTab].brands && services[activeTab].brands!.length > 0 && (
+                <div>
+                  <h4 className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-wider mb-3 sm:mb-4">
+                    Brands We Deal With
+                  </h4>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+                    {services[activeTab].brands!.map((brand) => (
+                      <div
+                        key={brand}
+                        className="flex items-center justify-center p-3 bg-white rounded-xl border border-border hover:border-primary/40 hover:shadow-md transition-all duration-300 h-14"
+                      >
+                        {brandLogos[brand] ? (
+                          <img
+                            src={brandLogos[brand]}
+                            alt={brand}
+                            className="h-6 w-auto max-w-full object-contain"
+                            style={{ filter: 'invert(0)' }}
+                          />
+                        ) : (
+                          <span className="text-xs font-bold text-foreground">{brand}</span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Closing statement */}
+              {services[activeTab].closingStatement && (
+                <div className="p-4 bg-primary/5 rounded-xl border-l-4 border-primary">
+                  <p className="text-sm text-foreground font-medium italic leading-relaxed">
+                    {services[activeTab].closingStatement}
+                  </p>
+                </div>
+              )}
 
               <a
                 href="/contact"

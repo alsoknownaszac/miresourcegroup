@@ -20,6 +20,9 @@ const servicesQuery = `*[_type == "serviceDetailed" && published == true] | orde
   color,
   bgColor,
   subcategories[] | order(order asc),
+  products,
+  brands,
+  closingStatement,
   order,
   published
 }`
@@ -55,8 +58,7 @@ export async function getServicesDetailed(): Promise<ServiceDetailed[]> {
   
   try {
     const services = await client.fetch(servicesQuery, {}, {
-      cache: isEnabled ? 'no-store' : 'force-cache',
-      next: { revalidate: isEnabled ? 0 : 60 },
+      next: { revalidate: 30 },
     })
     
     if (!services || services.length === 0) {
@@ -96,6 +98,9 @@ export async function getServiceById(id: string): Promise<ServiceDetailed | null
         color,
         bgColor,
         subcategories[] | order(order asc),
+        products,
+        brands,
+        closingStatement,
         order,
         published
       }`,

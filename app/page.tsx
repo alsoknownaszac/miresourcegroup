@@ -6,6 +6,7 @@ import Clients from "@/components/clients-simple"
 import Testimonials from "@/components/testimonials-simple"
 import { CTASection } from "@/components/home/cta-section"
 import Footer from "@/components/footer-simple"
+import { getCTAContent } from "@/lib/static-content-service"
 
 export const metadata = {
   title: "M.I Resource Services Ltd | No.1 Oil & Gas Support Services Provider in Nigeria",
@@ -17,7 +18,9 @@ export const metadata = {
   },
 }
 
-export default function Home() {
+export default async function Home() {
+  const ctaContent = await getCTAContent()
+
   return (
     <main className="min-h-screen">
       <Header />
@@ -26,7 +29,7 @@ export default function Home() {
       <FeaturedServices />
       <Clients />
       <Testimonials />
-      <CTASection />
+      <CTASection content={ctaContent} />
       <Footer />
     </main>
   )

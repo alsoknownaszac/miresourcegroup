@@ -3,41 +3,18 @@
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { Linkedin, Facebook, Twitter, Instagram, Youtube } from "lucide-react"
+import type { SocialLink } from "@/types/sanity"
 
-const socialLinks = [
-  {
-    name: "LinkedIn",
-    icon: Linkedin,
-    url: "https://linkedin.com/company/miresourcegroup",
-    color: "hover:bg-[#0A66C2]"
-  },
-  {
-    name: "Facebook",
-    icon: Facebook,
-    url: "https://facebook.com/miresourcegroup",
-    color: "hover:bg-[#1877F2]"
-  },
-  {
-    name: "Twitter",
-    icon: Twitter,
-    url: "https://twitter.com/miresourcegroup",
-    color: "hover:bg-[#1DA1F2]"
-  },
-  {
-    name: "Instagram",
-    icon: Instagram,
-    url: "https://instagram.com/miresourcegroup",
-    color: "hover:bg-[#E4405F]"
-  },
-  {
-    name: "YouTube",
-    icon: Youtube,
-    url: "https://youtube.com/@miresourcegroup",
-    color: "hover:bg-[#FF0000]"
-  }
-]
+const iconMap: Record<string, any> = { linkedin: Linkedin, facebook: Facebook, twitter: Twitter, instagram: Instagram, youtube: Youtube }
+const colorMap: Record<string, string> = {
+  linkedin: 'hover:bg-[#0A66C2]',
+  facebook: 'hover:bg-[#1877F2]',
+  twitter: 'hover:bg-[#1DA1F2]',
+  instagram: 'hover:bg-[#E4405F]',
+  youtube: 'hover:bg-[#FF0000]',
+}
 
-export function SocialMediaLinks() {
+export function SocialMediaLinks({ links }: { links: SocialLink[] }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
@@ -50,20 +27,16 @@ export function SocialMediaLinks() {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <h3 className="text-xl font-bold text-foreground mb-3">
-            Connect With Us
-          </h3>
-          <p className="text-muted-foreground mb-6 text-sm">
-            Follow us on social media for updates and industry insights
-          </p>
+          <h3 className="text-xl font-bold text-foreground mb-3">Connect With Us</h3>
+          <p className="text-muted-foreground mb-6 text-sm">Follow us on social media for updates and industry insights</p>
 
           <div className="flex justify-center gap-3 flex-wrap">
-            {socialLinks.map((social, index) => {
-              const IconComponent = social.icon
-              
+            {links.map((social, index) => {
+              const IconComponent = iconMap[social.platform] ?? Linkedin
+              const hoverColor = colorMap[social.platform] ?? 'hover:bg-primary'
               return (
                 <motion.a
-                  key={social.name}
+                  key={social._key ?? social.platform}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -72,8 +45,8 @@ export function SocialMediaLinks() {
                   transition={{ duration: 0.3, delay: index * 0.05 }}
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className={`w-12 h-12 rounded-lg bg-card border border-border flex items-center justify-center transition-all duration-300 ${social.color} hover:text-white hover:border-transparent group`}
-                  aria-label={social.name}
+                  className={`w-12 h-12 rounded-lg bg-card border border-border flex items-center justify-center transition-all duration-300 ${hoverColor} hover:text-white hover:border-transparent group`}
+                  aria-label={social.platform}
                 >
                   <IconComponent className="w-5 h-5 text-foreground group-hover:text-white transition-colors" />
                 </motion.a>
