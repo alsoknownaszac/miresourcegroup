@@ -8,6 +8,7 @@ import { ServiceApproach } from "@/components/services/service-approach"
 import { CTASection } from "@/components/home/cta-section"
 import Footer from "@/components/footer-simple"
 import { getServicesDetailed } from "@/lib/services-detailed-content-service"
+import { getWhyChooseUs, getServiceApproach, getCTAContent } from "@/lib/static-content-service"
 
 export const metadata: Metadata = {
   title: "Our Services | M.I Resource Services Ltd",
@@ -15,8 +16,13 @@ export const metadata: Metadata = {
 }
 
 export default async function ServicesPage() {
-  const services = await getServicesDetailed()
-  
+  const [services, whyChooseUs, serviceApproach, ctaContent] = await Promise.all([
+    getServicesDetailed(),
+    getWhyChooseUs(),
+    getServiceApproach(),
+    getCTAContent(),
+  ])
+
   return (
     <PageWrapper>
       <Header />
@@ -26,9 +32,9 @@ export default async function ServicesPage() {
         backgroundImage="/view-male-engineer-work-engineers-day-celebration.jpg"
       />
       <ServiceDetails services={services} />
-      <WhyChooseUs />
-      <ServiceApproach />
-      <CTASection />
+      <WhyChooseUs reasons={whyChooseUs} />
+      <ServiceApproach steps={serviceApproach} />
+      <CTASection content={ctaContent} />
       <Footer />
     </PageWrapper>
   )

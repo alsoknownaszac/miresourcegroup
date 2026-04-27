@@ -11,13 +11,31 @@ import { CompanyStats } from "@/components/about/company-stats"
 import { EquipmentFacilities } from "@/components/about/equipment-facilities"
 import { CTASection } from "@/components/home/cta-section"
 import Footer from "@/components/footer-simple"
+import {
+  getCoreValues,
+  getCompanyStats,
+  getKeyCapabilities,
+  getMajorAchievements,
+  getEquipmentFacilities,
+  getCTAContent,
+} from "@/lib/static-content-service"
 
 export const metadata: Metadata = {
   title: "About Us | M.I Resource Services Ltd",
   description: "Learn about M.I Resource Services Ltd's mission, vision, and commitment to excellence in Nigeria's Oil & Gas industry.",
 }
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const [coreValues, companyStats, keyCapabilities, majorAchievements, equipment, ctaContent] =
+    await Promise.all([
+      getCoreValues(),
+      getCompanyStats(),
+      getKeyCapabilities(),
+      getMajorAchievements(),
+      getEquipmentFacilities(),
+      getCTAContent(),
+    ])
+
   return (
     <PageWrapper>
       <Header />
@@ -27,13 +45,13 @@ export default function AboutPage() {
         backgroundImage="/panoramic-shot-oil-rigs-sea-with-beautiful-sunset.jpg"
       />
       <About />
-      <CompanyStats />
+      <CompanyStats stats={companyStats} />
       <MissionVision />
-      <KeyCapabilities />
-      <MajorAchievements />
-      <CoreValues />
-      <EquipmentFacilities />
-      <CTASection />
+      <KeyCapabilities capabilities={keyCapabilities} />
+      <MajorAchievements achievements={majorAchievements} />
+      <CoreValues values={coreValues} />
+      <EquipmentFacilities equipment={equipment} />
+      <CTASection content={ctaContent} />
       <Footer />
     </PageWrapper>
   )

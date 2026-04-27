@@ -1,16 +1,10 @@
-"use client"
-
 import { Suspense } from "react"
-import dynamic from "next/dynamic"
+import { CaseStudies } from "./case-studies"
 
-const CaseStudiesClient = dynamic(() => import("./case-studies-client").then(mod => ({ default: mod.CaseStudiesClient })), {
-  ssr: false,
-})
-
-export default function CaseStudies() {
+export default function CaseStudiesSimple() {
   return (
     <Suspense fallback={<div className="py-24" />}>
-      <CaseStudiesClient />
+      <CaseStudies />
     </Suspense>
   )
 }

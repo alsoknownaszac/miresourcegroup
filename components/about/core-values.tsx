@@ -2,42 +2,12 @@
 
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
-import { Shield, Users, Lightbulb, Award, Heart, Zap } from "lucide-react"
+import { Shield, Users, Lightbulb, Award, Heart, Zap, Target, Globe } from "lucide-react"
+import type { CoreValue } from "@/types/sanity"
 
-const values = [
-  {
-    icon: Shield,
-    title: "Health, Safety & Environment",
-    description: "The health, welfare and safety of our staff, contractors and the general public. We are committed to a safe operating environment and protection of environment quality.",
-    color: "bg-blue-500"
-  },
-  {
-    icon: Users,
-    title: "Our People First",
-    description: "Our staff are our most important asset and we will not compromise our safety standards to achieve other corporate goals.",
-    color: "bg-green-500"
-  },
-  {
-    icon: Award,
-    title: "Regulatory Excellence",
-    description: "We strive to meet or exceed regulatory compliance, industry codes, guidelines and practices in all our operations.",
-    color: "bg-purple-500"
-  },
-  {
-    icon: Shield,
-    title: "Injury & Damage Prevention",
-    description: "We strive to prevent injury to staff and damage to equipment, material and the environment through proactive measures.",
-    color: "bg-orange-500"
-  },
-  {
-    icon: Heart,
-    title: "Social Responsibility",
-    description: "Maintaining high standards of environment, health and safety performance consistent with the well-being of society.",
-    color: "bg-red-500"
-  }
-]
+const iconMap: Record<string, any> = { Shield, Users, Award, Heart, Zap, Lightbulb, Target, Globe }
 
-export function CoreValues() {
+export function CoreValues({ values }: { values: CoreValue[] }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
@@ -63,28 +33,22 @@ export function CoreValues() {
 
         <div className="max-w-4xl mx-auto space-y-6">
           {values.map((value, index) => {
-            const IconComponent = value.icon
-            
+            const IconComponent = iconMap[value.iconName] ?? Shield
             return (
               <motion.div
-                key={value.title}
+                key={value._key}
                 initial={{ opacity: 0, x: -50 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="group"
               >
                 <div className="flex gap-6 p-6 bg-card rounded-2xl border border-border hover:border-primary/40 hover:shadow-lg transition-all duration-300">
-                  <div className={`shrink-0 w-14 h-14 rounded-xl ${value.color} flex items-center justify-center`}>
+                  <div className={`shrink-0 w-14 h-14 rounded-xl ${value.bgColor} flex items-center justify-center`}>
                     <IconComponent className="w-7 h-7 text-white" />
                   </div>
-                  
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-foreground mb-2">
-                      {value.title}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {value.description}
-                    </p>
+                    <h3 className="text-xl font-bold text-foreground mb-2">{value.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed">{value.description}</p>
                   </div>
                 </div>
               </motion.div>

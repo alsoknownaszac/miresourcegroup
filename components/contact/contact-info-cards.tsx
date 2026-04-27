@@ -3,35 +3,46 @@
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { Phone, Mail, MapPin, Clock } from "lucide-react"
+import type { ContactMethod } from "@/types/sanity"
 
-const contactMethods = [
+const iconMap: Record<string, any> = { Phone, Mail, MapPin, Clock }
+
+const defaultContactMethods: ContactMethod[] = [
   {
-    icon: Phone,
+    _key: 'cm1',
+    iconName: 'Phone',
     title: "Phone",
     details: ["+234 (0) 803 XXX XXXX", "+234 (0) 805 XXX XXXX"],
-    description: "Mon-Fri from 8am to 6pm"
+    description: "Mon-Fri from 8am to 6pm",
+    order: 1,
   },
   {
-    icon: Mail,
+    _key: 'cm2',
+    iconName: 'Mail',
     title: "Email",
     details: ["info@miresourcegroup.com", "support@miresourcegroup.com"],
-    description: "We'll respond within 24 hours"
+    description: "We'll respond within 24 hours",
+    order: 2,
   },
   {
-    icon: MapPin,
+    _key: 'cm3',
+    iconName: 'MapPin',
     title: "Office",
     details: ["Lagos Office", "Port Harcourt Office"],
-    description: "Visit us during business hours"
+    description: "Visit us during business hours",
+    order: 3,
   },
   {
-    icon: Clock,
+    _key: 'cm4',
+    iconName: 'Clock',
     title: "Business Hours",
     details: ["Mon-Fri: 8:00 AM - 6:00 PM", "Sat: 9:00 AM - 2:00 PM"],
-    description: "Closed on Sundays and public holidays"
+    description: "Closed on Sundays and public holidays",
+    order: 4,
   }
 ]
 
-export function ContactInfoCards() {
+export function ContactInfoCards({ methods = defaultContactMethods }: { methods?: ContactMethod[] }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
@@ -39,8 +50,8 @@ export function ContactInfoCards() {
     <section className="py-16" ref={ref}>
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {contactMethods.map((method, index) => {
-            const IconComponent = method.icon
+          {methods.map((method, index) => {
+            const IconComponent = iconMap[method.iconName] ?? Phone
             
             return (
               <motion.div

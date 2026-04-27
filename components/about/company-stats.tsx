@@ -2,51 +2,24 @@
 
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
-import { TrendingUp, Users, Award, Globe } from "lucide-react"
+import { TrendingUp, Users, Award, Globe, Shield, Zap, Target, BarChart3 } from "lucide-react"
+import type { CompanyStat } from "@/types/sanity"
 
-const stats = [
-  {
-    icon: TrendingUp,
-    value: "15+",
-    label: "Years of Excellence",
-    description: "Serving Nigeria's Oil & Gas industry"
-  },
-  {
-    icon: Users,
-    value: "500+",
-    label: "Projects Completed",
-    description: "Successful project deliveries"
-  },
-  {
-    icon: Award,
-    value: "ISO 9001",
-    label: "Certified",
-    description: "International quality standards"
-  },
-  {
-    icon: Globe,
-    value: "50+",
-    label: "Industry Partners",
-    description: "Strategic alliances worldwide"
-  }
-]
+const iconMap: Record<string, any> = { TrendingUp, Users, Award, Globe, Shield, Zap, Target, BarChart3 }
 
-export function CompanyStats() {
+export function CompanyStats({ stats }: { stats: CompanyStat[] }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
     <section className="py-24 bg-primary relative overflow-hidden" ref={ref}>
-      {/* Background Pattern */}
       <div
         className="absolute inset-0 opacity-10"
         style={{
-          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                           linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)`,
           backgroundSize: '50px 50px',
         }}
       />
-
       <div className="mx-auto max-w-7xl px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -64,11 +37,10 @@ export function CompanyStats() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => {
-            const IconComponent = stat.icon
-            
+            const IconComponent = iconMap[stat.iconName] ?? TrendingUp
             return (
               <motion.div
-                key={stat.label}
+                key={stat._key}
                 initial={{ opacity: 0, y: 40 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -77,15 +49,9 @@ export function CompanyStats() {
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary-foreground/10 mb-6">
                   <IconComponent className="w-8 h-8 text-primary-foreground" />
                 </div>
-                <div className="text-5xl font-bold text-primary-foreground mb-2">
-                  {stat.value}
-                </div>
-                <div className="text-xl font-semibold text-primary-foreground mb-2">
-                  {stat.label}
-                </div>
-                <div className="text-primary-foreground/80">
-                  {stat.description}
-                </div>
+                <div className="text-5xl font-bold text-primary-foreground mb-2">{stat.value}</div>
+                <div className="text-xl font-semibold text-primary-foreground mb-2">{stat.label}</div>
+                <div className="text-primary-foreground/80">{stat.description}</div>
               </motion.div>
             )
           })}
