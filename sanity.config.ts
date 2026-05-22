@@ -106,14 +106,14 @@ export default defineConfig({
                   .title('Header Content')
               ),
             S.listItem()
-              .title('Contact')
+              .title('Contact Page')
               .id('contact')
               .icon(() => '📞')
               .child(
                 S.document()
                   .schemaType('contact')
                   .documentId('contact-content')
-                  .title('Contact Content')
+                  .title('Contact Page')
               ),
             S.listItem()
               .title('Clients Section')

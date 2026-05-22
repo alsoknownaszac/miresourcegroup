@@ -3,10 +3,17 @@
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { Linkedin, Facebook, Twitter, Instagram, Youtube } from "lucide-react"
-import type { SocialLink } from "@/types/sanity"
+import type { ContactSocialLink, ContactSocialSection } from "@/types/sanity"
 
-const iconMap: Record<string, any> = { linkedin: Linkedin, facebook: Facebook, twitter: Twitter, instagram: Instagram, youtube: Youtube }
-const colorMap: Record<string, string> = {
+const iconMap = {
+  linkedin: Linkedin,
+  facebook: Facebook,
+  twitter: Twitter,
+  instagram: Instagram,
+  youtube: Youtube,
+} as const
+
+const colorMap: Record<keyof typeof iconMap, string> = {
   linkedin: 'hover:bg-[#0A66C2]',
   facebook: 'hover:bg-[#1877F2]',
   twitter: 'hover:bg-[#1DA1F2]',
@@ -14,7 +21,12 @@ const colorMap: Record<string, string> = {
   youtube: 'hover:bg-[#FF0000]',
 }
 
-export function SocialMediaLinks({ links }: { links: SocialLink[] }) {
+interface SocialMediaLinksProps {
+  section: ContactSocialSection
+  links: ContactSocialLink[]
+}
+
+export function SocialMediaLinks({ section, links }: SocialMediaLinksProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
@@ -27,16 +39,21 @@ export function SocialMediaLinks({ links }: { links: SocialLink[] }) {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <h3 className="text-xl font-bold text-foreground mb-3">Connect With Us</h3>
-          <p className="text-muted-foreground mb-6 text-sm">Follow us on social media for updates and industry insights</p>
+          {section.heading && (
+            <h3 className="text-xl font-bold text-foreground mb-3">{section.heading}</h3>
+          )}
+          {section.description && (
+            <p className="text-muted-foreground mb-6 text-sm">{section.description}</p>
+          )}
 
           <div className="flex justify-center gap-3 flex-wrap">
             {links.map((social, index) => {
               const IconComponent = iconMap[social.platform] ?? Linkedin
               const hoverColor = colorMap[social.platform] ?? 'hover:bg-primary'
+
               return (
                 <motion.a
-                  key={social._key ?? social.platform}
+                  key={social._key}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"

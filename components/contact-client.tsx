@@ -6,6 +6,7 @@ import { useRef, useState } from "react"
 import { Send, MapPin, Phone, Mail, Globe, Clock, Loader2, CheckCircle } from "lucide-react"
 import { PortableText } from '@portabletext/react'
 import type { ContactContent } from "@/types/sanity"
+import { highlightText } from "@/lib/highlight-text"
 
 interface ContactClientProps {
   content: ContactContent
@@ -24,33 +25,20 @@ export default function ContactClient({ content }: ContactClientProps) {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const fields = content.formFields
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 1500))
     setIsSubmitting(false)
     setIsSubmitted(true)
-  }
-
-  // Helper function to highlight text
-  const highlightText = (text: string, highlight?: string) => {
-    if (!highlight) return text
-    
-    const parts = text.split(new RegExp(`(${highlight})`, 'gi'))
-    return parts.map((part, index) => 
-      part.toLowerCase() === highlight.toLowerCase() ? (
-        <span key={index} className="text-primary">{part}</span>
-      ) : part
-    )
   }
 
   return (
     <section id="contact" className="py-24 relative" ref={ref}>
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid lg:grid-cols-2 gap-16">
-          {/* Left - Info */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -71,7 +59,7 @@ export default function ContactClient({ content }: ContactClientProps) {
                 const IconComponent = iconMap[item.icon as keyof typeof iconMap] || Mail
                 return (
                   <motion.div
-                    key={item.label}
+                    key={item._key ?? item.label}
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
@@ -90,7 +78,6 @@ export default function ContactClient({ content }: ContactClientProps) {
             </div>
           </motion.div>
 
-          {/* Right - Form */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -107,10 +94,10 @@ export default function ContactClient({ content }: ContactClientProps) {
                     <CheckCircle className="w-8 h-8 text-primary" />
                   </div>
                   <h3 className="mt-6 text-xl font-semibold text-foreground">
-                    {content.formSettings?.successMessage?.title || 'Message Sent!'}
+                    {content.formSettings.successMessage.title}
                   </h3>
                   <p className="mt-2 text-muted-foreground">
-                    {content.formSettings?.successMessage?.description || 'Thank you for reaching out. We\'ll get back to you shortly.'}
+                    {content.formSettings.successMessage.description}
                   </p>
                 </motion.div>
               ) : (
@@ -118,65 +105,65 @@ export default function ContactClient({ content }: ContactClientProps) {
                   <div className="grid sm:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="firstName" className="block text-sm font-medium text-foreground mb-2">
-                        First Name
+                        {fields.firstNameLabel}
                       </label>
                       <input
                         type="text"
                         id="firstName"
                         required
                         className="w-full px-4 py-3 bg-secondary border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
-                        placeholder="John"
+                        placeholder={fields.firstNamePlaceholder}
                       />
                     </div>
                     <div>
                       <label htmlFor="lastName" className="block text-sm font-medium text-foreground mb-2">
-                        Last Name
+                        {fields.lastNameLabel}
                       </label>
                       <input
                         type="text"
                         id="lastName"
                         required
                         className="w-full px-4 py-3 bg-secondary border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
-                        placeholder="Doe"
+                        placeholder={fields.lastNamePlaceholder}
                       />
                     </div>
                   </div>
 
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                      Email Address
+                      {fields.emailLabel}
                     </label>
                     <input
                       type="email"
                       id="email"
                       required
                       className="w-full px-4 py-3 bg-secondary border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
-                      placeholder="john@example.com"
+                      placeholder={fields.emailPlaceholder}
                     />
                   </div>
 
                   <div>
                     <label htmlFor="company" className="block text-sm font-medium text-foreground mb-2">
-                      Company
+                      {fields.companyLabel}
                     </label>
                     <input
                       type="text"
                       id="company"
                       className="w-full px-4 py-3 bg-secondary border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
-                      placeholder="Your Company"
+                      placeholder={fields.companyPlaceholder}
                     />
                   </div>
 
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                      Message
+                      {fields.messageLabel}
                     </label>
                     <textarea
                       id="message"
                       rows={4}
                       required
                       className="w-full px-4 py-3 bg-secondary border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all resize-none"
-                      placeholder="Tell us about your project..."
+                      placeholder={fields.messagePlaceholder}
                     />
                   </div>
 
@@ -190,11 +177,11 @@ export default function ContactClient({ content }: ContactClientProps) {
                     {isSubmitting ? (
                       <>
                         <Loader2 size={18} className="animate-spin" />
-                        Sending...
+                        {content.formSettings.submittingButtonText}
                       </>
                     ) : (
                       <>
-                        {content.formSettings?.submitButtonText || 'Send Message'}
+                        {content.formSettings.submitButtonText}
                         <Send size={18} />
                       </>
                     )}
