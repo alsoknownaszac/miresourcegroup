@@ -3,11 +3,18 @@
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { MapPin, Phone, Mail, User, Clock } from "lucide-react"
-import type { Office } from "@/types/sanity"
+import type { ContactLocationsSection, ContactOffice } from "@/types/sanity"
+import { highlightText } from "@/lib/highlight-text"
 
-export function OfficeLocations({ offices }: { offices: Office[] }) {
+interface OfficeLocationsProps {
+  section: ContactLocationsSection
+  offices: ContactOffice[]
+}
+
+export function OfficeLocations({ section, offices }: OfficeLocationsProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const emergency = section.emergency
 
   return (
     <section className="py-24 bg-background" ref={ref}>
@@ -18,13 +25,21 @@ export function OfficeLocations({ offices }: { offices: Office[] }) {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-primary text-sm font-semibold tracking-wider uppercase">Our Locations</span>
-          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold">
-            Visit Our <span className="text-primary">Offices</span>
-          </h2>
-          <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Strategically located in Nigeria's key industrial hubs to serve you better
-          </p>
+          {section.badgeText && (
+            <span className="text-primary text-sm font-semibold tracking-wider uppercase">
+              {section.badgeText}
+            </span>
+          )}
+          {section.headline && (
+            <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold">
+              {highlightText(section.headline, section.headlineHighlight)}
+            </h2>
+          )}
+          {section.subtitle && (
+            <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
+              {section.subtitle}
+            </p>
+          )}
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-8">
@@ -40,9 +55,11 @@ export function OfficeLocations({ offices }: { offices: Office[] }) {
                 <div className="flex items-start justify-between mb-6">
                   <div>
                     <h3 className="text-2xl font-bold text-foreground mb-1">{office.name}</h3>
-                    <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full">
-                      {office.type}
-                    </span>
+                    {office.type && (
+                      <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full">
+                        {office.type}
+                      </span>
+                    )}
                   </div>
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                     <MapPin className="w-6 h-6 text-primary" />
@@ -60,8 +77,11 @@ export function OfficeLocations({ offices }: { offices: Office[] }) {
                         <Phone className="w-5 h-5 text-primary" />
                       </div>
                       <div>
-                        <p className="text-xs text-muted-foreground mb-0.5">Phone</p>
-                        <a href={`tel:${office.phone}`} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+                        <p className="text-xs text-muted-foreground mb-0.5">{section.phoneLabel}</p>
+                        <a
+                          href={`tel:${office.phone}`}
+                          className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                        >
                           {office.phone}
                         </a>
                       </div>
@@ -74,8 +94,11 @@ export function OfficeLocations({ offices }: { offices: Office[] }) {
                         <Mail className="w-5 h-5 text-primary" />
                       </div>
                       <div>
-                        <p className="text-xs text-muted-foreground mb-0.5">Email</p>
-                        <a href={`mailto:${office.email}`} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+                        <p className="text-xs text-muted-foreground mb-0.5">{section.emailLabel}</p>
+                        <a
+                          href={`mailto:${office.email}`}
+                          className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                        >
                           {office.email}
                         </a>
                       </div>
@@ -88,7 +111,7 @@ export function OfficeLocations({ offices }: { offices: Office[] }) {
                         <Clock className="w-5 h-5 text-primary" />
                       </div>
                       <div>
-                        <p className="text-xs text-muted-foreground mb-0.5">Business Hours</p>
+                        <p className="text-xs text-muted-foreground mb-0.5">{section.hoursLabel}</p>
                         <p className="text-sm font-medium text-foreground">{office.hours}</p>
                       </div>
                     </div>
@@ -101,17 +124,27 @@ export function OfficeLocations({ offices }: { offices: Office[] }) {
                           <User className="w-5 h-5 text-primary" />
                         </div>
                         <div className="flex-1">
-                          <p className="text-xs text-muted-foreground mb-1">Contact Person</p>
-                          <p className="text-sm font-bold text-foreground">{office.contactPerson.name}</p>
-                          <p className="text-xs text-muted-foreground mb-2">{office.contactPerson.title}</p>
+                          <p className="text-xs text-muted-foreground mb-1">{section.contactPersonLabel}</p>
+                          {office.contactPerson.name && (
+                            <p className="text-sm font-bold text-foreground">{office.contactPerson.name}</p>
+                          )}
+                          {office.contactPerson.title && (
+                            <p className="text-xs text-muted-foreground mb-2">{office.contactPerson.title}</p>
+                          )}
                           <div className="space-y-1">
                             {office.contactPerson.phone && (
-                              <a href={`tel:${office.contactPerson.phone}`} className="block text-xs text-primary hover:underline">
+                              <a
+                                href={`tel:${office.contactPerson.phone}`}
+                                className="block text-xs text-primary hover:underline"
+                              >
                                 {office.contactPerson.phone}
                               </a>
                             )}
                             {office.contactPerson.email && (
-                              <a href={`mailto:${office.contactPerson.email}`} className="block text-xs text-primary hover:underline">
+                              <a
+                                href={`mailto:${office.contactPerson.email}`}
+                                className="block text-xs text-primary hover:underline"
+                              >
                                 {office.contactPerson.email}
                               </a>
                             )}
@@ -128,21 +161,28 @@ export function OfficeLocations({ offices }: { offices: Office[] }) {
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-12 p-8 bg-primary/5 rounded-2xl border border-primary/20"
-        >
-          <div className="text-center">
-            <h4 className="text-xl font-bold text-foreground mb-2">Need Emergency Support?</h4>
-            <p className="text-muted-foreground mb-4">We offer 24/7 emergency response for critical operations</p>
-            <a href="tel:+2348071173927" className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-colors">
-              <Phone className="w-5 h-5" />
-              Call Emergency Hotline
-            </a>
-          </div>
-        </motion.div>
+        {emergency?.title && emergency?.phone && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mt-12 p-8 bg-primary/5 rounded-2xl border border-primary/20"
+          >
+            <div className="text-center">
+              <h4 className="text-xl font-bold text-foreground mb-2">{emergency.title}</h4>
+              {emergency.description && (
+                <p className="text-muted-foreground mb-4">{emergency.description}</p>
+              )}
+              <a
+                href={`tel:${emergency.phone}`}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-colors"
+              >
+                <Phone className="w-5 h-5" />
+                {emergency.buttonText}
+              </a>
+            </div>
+          </motion.div>
+        )}
       </div>
     </section>
   )

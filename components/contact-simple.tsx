@@ -1,26 +1,12 @@
-import { Suspense } from 'react'
-import { getContactContent } from "@/lib/contact-content-service"
-import { ensureInitialContent } from "@/lib/auto-migrate"
 import ContactClient from "./contact-client"
-import { ContactSkeleton } from './contact-skeleton'
-import { HeroErrorBoundary } from './hero-error-boundary'
+import { HeroErrorBoundary } from "./hero-error-boundary"
+import type { ContactContent } from "@/types/sanity"
 
-// Server component that fetches content from Sanity
-async function ContactWithContent() {
-  // Ensure initial content exists
-  await ensureInitialContent()
-  
-  // Fetch content from CMS
-  const content = await getContactContent()
-  return <ContactClient content={content} />
-}
-
-export default function ContactSimple() {
+/** @deprecated Prefer fetching on app/contact/page.tsx and rendering ContactClient directly */
+export default function ContactSimple({ content }: { content: ContactContent }) {
   return (
     <HeroErrorBoundary>
-      <Suspense fallback={<ContactSkeleton />}>
-        <ContactWithContent />
-      </Suspense>
+      <ContactClient content={content} />
     </HeroErrorBoundary>
   )
 }

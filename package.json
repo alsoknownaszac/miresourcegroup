@@ -14,7 +14,8 @@
     "test:hero": "node -e \"require('./lib/test-hero-integration.ts').testHeroIntegration()\"",
     "pre-deploy": "node scripts/pre-deploy-check.js",
     "check:content": "node scripts/sanity-content-summary.js",
-    "check:images": "node scripts/check-all-images.js"
+    "check:images": "node scripts/check-all-images.js",
+    "migrate:contact": "node scripts/migrate-contact-page.js"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",

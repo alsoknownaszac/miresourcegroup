@@ -244,35 +244,122 @@ export interface ContactInfo {
   order: number
 }
 
+export interface ContactPageSeo {
+  title?: string
+  description?: string
+  ogTitle?: string
+  ogDescription?: string
+  ogImage?: string
+}
+
+export interface ContactPageHero {
+  title: string
+  subtitle?: string
+  backgroundImage: string
+  overlayOpacity?: number
+}
+
+export interface ContactFormFields {
+  firstNameLabel: string
+  firstNamePlaceholder: string
+  lastNameLabel: string
+  lastNamePlaceholder: string
+  emailLabel: string
+  emailPlaceholder: string
+  companyLabel: string
+  companyPlaceholder: string
+  messageLabel: string
+  messagePlaceholder: string
+}
+
+export interface ContactSectionHeading {
+  badgeText?: string
+  headline?: string
+  headlineHighlight?: string
+  subtitle?: string
+}
+
+export interface ContactOffice {
+  _key: string
+  name: string
+  type: string
+  address: string
+  phone?: string
+  email?: string
+  hours?: string
+  contactPerson?: OfficeContactPerson
+  order?: number
+}
+
+export interface ContactSocialLink {
+  _key: string
+  platform: 'linkedin' | 'facebook' | 'twitter' | 'instagram' | 'youtube'
+  url: string
+  order?: number
+}
+
+export interface ContactSocialSection {
+  heading?: string
+  description?: string
+  links: ContactSocialLink[]
+}
+
+export interface ContactFaqItem {
+  _key: string
+  question: string
+  answer: string
+  order?: number
+}
+
+export interface ContactFaqSection extends ContactSectionHeading {
+  ctaText?: string
+  ctaEmail?: string
+  ctaButtonText?: string
+  items: ContactFaqItem[]
+}
+
+export interface ContactLocationsSection extends ContactSectionHeading {
+  phoneLabel?: string
+  emailLabel?: string
+  hoursLabel?: string
+  contactPersonLabel?: string
+  emergency?: {
+    title?: string
+    description?: string
+    phone?: string
+    buttonText?: string
+  }
+}
+
 export interface ContactContent {
   _id?: string
   _type?: 'contact'
   _createdAt?: string
   _updatedAt?: string
-  
-  // Main content
+
+  seo?: ContactPageSeo
+  hero: ContactPageHero
+
   badgeText: string
   headline: string
   highlightedText?: string
   description: PortableTextBlock[]
-  
-  // Contact information
   contactInfo: ContactInfo[]
-  
-  // Form settings
   formSettings: {
     submitButtonText: string
+    submittingButtonText?: string
     successMessage: {
       title: string
       description: string
     }
   }
-  
-  // SEO and metadata
-  seo?: {
-    title?: string
-    description?: string
-  }
+  formFields: ContactFormFields
+
+  locationsSection: ContactLocationsSection
+  offices: ContactOffice[]
+
+  socialSection: ContactSocialSection
+  faqSection: ContactFaqSection
 }
 
 export interface FooterSection {
